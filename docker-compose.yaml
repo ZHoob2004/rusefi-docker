@@ -1,21 +1,29 @@
 version: '3'
 services:
   nginx:
-    image: nginx:latest
+    build: ./nginx
     ports:
       - "80:80"
-    volumes:
-      - ./phpBB3:/var/www/phpBB3
-      - ./config/site.conf:/etc/nginx/conf.d/default.conf
     links:
       - php
       - mysql
+    volumes:
+      - type: volume
+        source: forum
+        target: /var/www/forum
   php:
     image: php:7.2-fpm
     volumes:
-      - ./phpBB3:/var/www/phpBB3
+      - type: volume
+        source: forum
+        target: /var/www/forum
+        volume:
+          nocopy: true
   mysql:
     image: mysql:5.5
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: example
+
+volumes:
+  forum:
