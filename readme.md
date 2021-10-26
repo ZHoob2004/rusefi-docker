@@ -10,3 +10,6 @@ docker-compose up
 ```
 
 open a browser to http://localhost/forum
+
+
+to fully clean up, remember to delete the volumes created by nginx and mysql
